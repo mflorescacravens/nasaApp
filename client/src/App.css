@@ -1,27 +1,33 @@
 .App {
   text-align: center;
+  background-image: url('https://images8.alphacoders.com/374/374852.jpg');
+  background-position: center;
+  background-attachment: fixed;
+  color: white;
 }
+
+
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
+  /* animation: App-logo-spin infinite 5s linear; */
   height: 40vmin;
   pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  text-align: center;
 }
 
 .App-link {
   color: #61dafb;
 }
+
+.rover-pictures {
+  max-width: 50%;
+  display: block;
+  margin: 15px auto;
+  height: 550px;
+  border-radius: 20px;
+}
+
+
 
 @keyframes App-logo-spin {
   from {
