@@ -8,24 +8,63 @@ import Signup from './Signup';
 function App() {
 
   const [user, setUser] = useState();
+  const [token, setToken] = useState();
   const [rover, setRover] = useState();
   const [picture, setPicture] = useState({});
   const [comment, setComment] = useState();
-  const [test, setTest] = useState();
+  
+  // useEffect(() => {
+  //   // console.log('token effect running')
+  //   // token = localStorage.getItem('mernToken');
+  //   if (!token || token === 'undefined') {
+  //     setToken(localStorage.removeItem('mernToken'));
+  //   } else {
+  //     axios.post('/auth/me/from/token', {token})
+  //     .then( res => {
+  //       if (res.data.type === 'error') {
+  //         setToken(localStorage.removeItem('mernToken'));
+  //       }
+  //     })
+  //   }
+  // })
 
   useEffect(() => {
-    // console.log('running first effect')
-    axios.get('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=1&api_key=lwwON4lcFqWw0zXubbcETbUPjgEtP3st0LT6d2no').then((response) => {
-      // console.log(response.data)
-      setPicture(response.data.photos);
-      // console.log(response.data.photos[0].img_src)
-    })
+    // console.log('user effect running')
+    if (user) {
+      console.log('user is logged in')
+    } else {
+      console.log('No user logged in')
+    }
   }, [])
+
+  useEffect(() => {
+    console.log('rover effect running')
+    // todo: have this on click change photos to specific rover
+    // setRover()
+  })
+
+  useEffect(() => {
+    axios.get(`https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=1000&page=1&api_key=lwwON4lcFqWw0zXubbcETbUPjgEtP3st0LT6d2no`).then((response) => {
+      setPicture(response.data.photos);
+    }) 
+  }, [])
+
+  // useEffect(() => {
+  //   setToken(localStorage.removeItem('mernToken'));
+  // })
 
   return (
     <div className="App">
       <h1>Rover Mars</h1>
+      <h3>Sign in/up!!!</h3>
       <Login />
+      <Signup />
+      <img className="roverImg" src="https://spaceplace.nasa.gov/mars-curiosity/en/sojourner.png" alt=""/>
+      <a>Hi! I'm Curiosity</a>
+      <img className="roverImg" src="https://spaceplace.nasa.gov/mars-curiosity/en/sojourner.png" alt=""/>
+      <a>Hi! I'm Opportunity</a>
+      <img className="roverImg" src="https://spaceplace.nasa.gov/mars-curiosity/en/sojourner.png" alt=""/>
+      <a>Hi! I'm Spirit</a>
       <PictureList picture={picture} handlePictureChange={setPicture}/>
     </div>
   )
@@ -48,37 +87,6 @@ function App() {
 //     this.logout = this.logout.bind(this);
 //   }
 
-//   checkForLocalToken() {
-//     var token = localStorage.getItem('mernToken');
-//     if (!token || token === 'undefined') {
-//       // Token is invalid or missing
-//       localStorage.removeItem('mernToken');
-//       this.setState({
-//         token: '',
-//         user: null
-//       })
-//     } else {
-//       // We found a token in localStorage, verify it
-//       axios.post('/auth/me/from/token', {token})
-//         .then( res => {
-//           if (res.data.type === 'error') {
-//             localStorage.removeItem('mernToken')
-//             this.setState({
-//               token: '',
-//               user: null,
-//               errorMessage: res.data.message
-//             })
-//           } else {
-//             localStorage.setItem('mernToken', res.data.token);
-//             this.setState({
-//               token: res.data.token,
-//               user: res.data.user,
-//               errorMessage: ''
-//             })
-//           }
-//       })
-//     }
-//   }
 
 //   liftToken({token, user}) {
 //     this.setState({

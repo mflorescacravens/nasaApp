@@ -1,8 +1,10 @@
 .App {
   text-align: center;
-  background-image: url('https://images8.alphacoders.com/374/374852.jpg');
-  background-position: center;
-  background-attachment: fixed;
+  /* background-image: url('https://images8.alphacoders.com/374/374852.jpg'); */
+  background: url('https://images8.alphacoders.com/374/374852.jpg') no-repeat center center fixed;
+  /* background-position: center; */
+  /* background-attachment: fixed; */
+  /* background- */
   color: white;
 }
 
@@ -25,6 +27,16 @@
   margin: 15px auto;
   height: 550px;
   border-radius: 20px;
+}
+
+.Login, .Signup {
+  background-color: black;
+  max-width: 50%;
+  margin: auto;
+}
+
+.roverImg {
+  margin: 20px 20px;
 }
 
 
