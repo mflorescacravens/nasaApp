@@ -9,9 +9,8 @@ function Comment({comments}) {
     const handleCommentSubmit = (e) => {
         e.preventDefault();
         setNewComment();
-        axios.post('/comment', {
-            comment: newComment,
-            like: false
+        axios.post('/comments', {
+            comment: newComment
         })
         // console.log('form submitted')
         // axios.post('/comments', ())
@@ -25,6 +24,7 @@ function Comment({comments}) {
                         <p alt='roverComments' 
                             className='rover-comments' 
                             key={id}>{comments.comment}</p>
+                        <button action="PUT">edit</button>
                         <button action="DELETE">delete</button>
                     </div>
         })
@@ -39,7 +39,7 @@ function Comment({comments}) {
         <div>
             <h3>enter a comment below</h3>
             <form onSubmit={handleCommentSubmit} action="POST">
-                <textarea name="comment" cols="30" rows="10"></textarea>
+                <textarea name="comment" onChange={setNewComment} cols="30" rows="10"></textarea>
                 <button>Submit</button>
             </form>
             {content}
