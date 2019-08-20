@@ -4,17 +4,24 @@ import './App.css';
 
 function Comment({comments}) {
 
-    const [newComment, setNewComment] = useState('');
+    const [newComment, setNewComment] = useState('enter comment here');
+
+    useEffect((e) => {
+        setNewComment({
+            comment: {newComment},
+            like: true
+        })
+    })
     
     const handleCommentSubmit = (e) => {
         e.preventDefault();
-        setNewComment();
         axios.post('/comments', {
             comment: newComment
         })
         // console.log('form submitted')
         // axios.post('/comments', ())
     }
+
 
     let content;
     // todo: only render if token is present

@@ -94,6 +94,7 @@ function App() {
       <h1>Rover Mars</h1>
       <h3>click a rover to view pictures</h3>
       {content}
+      <h4>You're looking at the rover: <span className='roverFeed'>{rover}</span></h4>
       <img className="roverImg" onClick={handleRoverChange} name='curiosity' src="https://spaceplace.nasa.gov/mars-curiosity/en/sojourner.png" alt=""/>
       <a onClick={handleRoverChange} name='curiosity'>Hi! I'm Curiosity</a>
       <img className="roverImg" onClick={handleRoverChange} name='opportunity' src="https://spaceplace.nasa.gov/mars-curiosity/en/sojourner.png" alt=""/>
