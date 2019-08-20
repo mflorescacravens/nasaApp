@@ -48,7 +48,7 @@ function Comment({comments}) {
         <div>
             <h3>enter a comment below</h3>
             <form onSubmit={handleCommentSubmit} action="POST">
-                <textarea name="comment" onChange={setNewComment} cols="80" rows="5"></textarea>
+                <textarea name="comment" onSubmit={setNewComment} cols="80" rows="5"></textarea>
                 <br/>
                 <button>Submit</button>
             </form>
