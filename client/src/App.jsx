@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import './App.css';
-import PictureList from './PictureList';
+import PicturesList from './PicturesList';
 import Login from './Login';
 import Signup from './Signup';
 
@@ -10,7 +10,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState('');
   const [rover, setRover] = useState();
-  const [picture, setPicture] = useState({});
+  const [pictures, setPictures] = useState({});
   const [comment, setComment] = useState();
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -61,8 +61,8 @@ function App() {
   })
 
   useEffect(() => {
-    axios.get(`https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=1000&page=1&api_key=lwwON4lcFqWw0zXubbcETbUPjgEtP3st0LT6d2no`).then((response) => {
-      setPicture(response.data.photos);
+    axios.get(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=1&api_key=lwwON4lcFqWw0zXubbcETbUPjgEtP3st0LT6d2no`).then((response) => {
+      setPictures(response.data.photos);
     }) 
   }, [])
 
@@ -72,7 +72,7 @@ function App() {
       <>
         <h1>Hello, {user.name}</h1>
         <button onClick={logout}>Logout</button>
-        <PictureList />
+        {/* <PicturesList /> */}
       </>
     )
   } else {
@@ -84,6 +84,7 @@ function App() {
       </div>
     )
   }
+  console.log('test one two', pictures, pictures.length)
 
   return (
     <div className="App">
@@ -95,7 +96,7 @@ function App() {
       <a>Hi! I'm Opportunity</a>
       <img className="roverImg" src="https://spaceplace.nasa.gov/mars-curiosity/en/sojourner.png" alt=""/>
       <a>Hi! I'm Spirit</a>
-      <PictureList picture={picture} handlePictureChange={setPicture}/>
+      <PicturesList pictures={pictures} handlePicturesChange={setPictures}/>
     </div>
   )
 
