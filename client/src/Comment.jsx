@@ -6,19 +6,21 @@ function Comment({comments}) {
 
     const [newComment, setNewComment] = useState('enter comment here');
 
-    useEffect((e) => {
-        setNewComment({
-            comment: {newComment},
-            like: true
+    useEffect(() => {
+        // setNewComment(e.target)
+        axios.post('/comments', {
+            comment: newComment,
+            like: false
         })
     })
     
     const handleCommentSubmit = (e) => {
         e.preventDefault();
-        axios.post('/comments', {
-            comment: newComment
-        })
         // console.log('form submitted')
+        axios.post('/comments', {
+            comment: newComment,
+            like: false
+        })
         // axios.post('/comments', ())
     }
 
@@ -46,7 +48,8 @@ function Comment({comments}) {
         <div>
             <h3>enter a comment below</h3>
             <form onSubmit={handleCommentSubmit} action="POST">
-                <textarea name="comment" onChange={setNewComment} cols="30" rows="10"></textarea>
+                <textarea name="comment" onChange={setNewComment} cols="80" rows="5"></textarea>
+                <br/>
                 <button>Submit</button>
             </form>
             {content}

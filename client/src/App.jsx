@@ -58,7 +58,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    axios.get('/comments/').then((response) => {
+    axios.get('/comments').then((response) => {
       setComments(response.data)
       // console.log(comments)
     })
@@ -95,14 +95,33 @@ function App() {
       <h3>click a rover to view pictures</h3>
       {content}
       <h4>You're looking at the rover: <span className='roverFeed'>{rover}</span></h4>
-      <img className="roverImg" onClick={handleRoverChange} name='curiosity' src="https://spaceplace.nasa.gov/mars-curiosity/en/sojourner.png" alt=""/>
-      <a onClick={handleRoverChange} name='curiosity'>Hi! I'm Curiosity</a>
-      <img className="roverImg" onClick={handleRoverChange} name='opportunity' src="https://spaceplace.nasa.gov/mars-curiosity/en/sojourner.png" alt=""/>
-      <a onClick={handleRoverChange} name='opportunity'>Hi! I'm Opportunity</a>
-      <img className="roverImg" onClick={handleRoverChange} name='spirit' src="https://spaceplace.nasa.gov/mars-curiosity/en/sojourner.png" alt=""/>
-      <a onClick={handleRoverChange} name='spirit'>Hi! I'm Spirit</a>
-      <Comment newComment={newComment} comments={comments} handleNewComment={setNewComment} handleCommentsChange={setComments}/>
-      <PicturesList pictures={pictures} handlePicturesChange={setPictures} />
+      <img className="roverImg" 
+            onClick={handleRoverChange} 
+            name='curiosity' 
+            src="https://spaceplace.nasa.gov/mars-curiosity/en/sojourner.png" 
+            alt=""/>
+      <a onClick={handleRoverChange} 
+          name='curiosity'>Hi! I'm Curiosity</a>
+      <img className="roverImg" 
+            onClick={handleRoverChange} 
+            name='opportunity' 
+            src="https://spaceplace.nasa.gov/mars-curiosity/en/sojourner.png" 
+            alt=""/>
+      <a onClick={handleRoverChange} 
+          name='opportunity'>Hi! I'm Opportunity</a>
+      <img className="roverImg" 
+            onClick={handleRoverChange} 
+            name='spirit' 
+            src="https://spaceplace.nasa.gov/mars-curiosity/en/sojourner.png" 
+            alt=""/>
+      <a onClick={handleRoverChange} 
+          name='spirit'>Hi! I'm Spirit</a>
+      <Comment newComment={newComment} 
+                comments={comments} 
+                handleNewComment={setNewComment} 
+                handleCommentsChange={setComments} />
+      <PicturesList pictures={pictures} 
+                handlePicturesChange={setPictures} />
     </div>
   )
 
