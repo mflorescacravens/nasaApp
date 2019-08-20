@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-// let Rover = new Schema({
-//     rover_description: {
-//         type: String,
+const rover = new mongoose.Schema({
+    name: String
+})
 
-//     }
-// })
+const Rover = mongoose.model('Rover', roverSchema);
+
+module.exports = Rover;

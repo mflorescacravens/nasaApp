@@ -7,35 +7,52 @@ import Signup from './Signup';
 
 function App() {
 
-  const [user, setUser] = useState();
-  const [token, setToken] = useState();
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState('');
   const [rover, setRover] = useState();
   const [picture, setPicture] = useState({});
   const [comment, setComment] = useState();
-  
-  // useEffect(() => {
-  //   // console.log('token effect running')
-  //   // token = localStorage.getItem('mernToken');
-  //   if (!token || token === 'undefined') {
-  //     setToken(localStorage.removeItem('mernToken'));
-  //   } else {
-  //     axios.post('/auth/me/from/token', {token})
-  //     .then( res => {
-  //       if (res.data.type === 'error') {
-  //         setToken(localStorage.removeItem('mernToken'));
-  //       }
-  //     })
-  //   }
-  // })
+  const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
-    // console.log('user effect running')
-    if (user) {
-      console.log('user is logged in')
+    var token = localStorage.getItem('mernToken');
+    if (!token || token === 'undefined') {
+      // token is invalid or missing
+      localStorage.removeItem('mernToken');
+      setToken('')
+      setUser(null)
     } else {
-      console.log('No user logged in')
+      // we found a token in localStorage, verify it
+      axios.post('/auth/me/from/token', {token})
+        .then( res => {
+          if (res.data.type === 'error') {
+            localStorage.removeItem('mernToken')
+            setToken('')
+            setUser(null)
+            setErrorMessage(res.data.message)
+          } else {
+            localStorage.setItem('mernToken', res.data.token);
+            setToken(res.data.token)
+            setUser(res.data.user)
+            setErrorMessage('')
+          }
+        })
     }
   }, [])
+
+  const logout = () => {
+    localStorage.removeItem('mernToken');
+    setToken('')
+    setUser(null)
+  }
+  
+  const liftToken = ({token, user}) => {
+    console.log('setting user: ', user);
+    console.log('setting token: ', token)
+    setToken(token)
+    setUser(user)
+  }
+  
 
   useEffect(() => {
     console.log('rover effect running')
@@ -49,16 +66,29 @@ function App() {
     }) 
   }, [])
 
-  // useEffect(() => {
-  //   setToken(localStorage.removeItem('mernToken'));
-  // })
+  var content;
+  if (user) {
+    content = (
+      <>
+        <h1>Hello, {user.name}</h1>
+        <button onClick={logout}>Logout</button>
+        <PictureList />
+      </>
+    )
+  } else {
+    content = (
+      <div>
+        <h3>Please login or signup</h3>
+        <Login />
+        <Signup />
+      </div>
+    )
+  }
 
   return (
     <div className="App">
       <h1>Rover Mars</h1>
-      <h3>Sign in/up!!!</h3>
-      <Login />
-      <Signup />
+      {content}
       <img className="roverImg" src="https://spaceplace.nasa.gov/mars-curiosity/en/sojourner.png" alt=""/>
       <a>Hi! I'm Curiosity</a>
       <img className="roverImg" src="https://spaceplace.nasa.gov/mars-curiosity/en/sojourner.png" alt=""/>
@@ -70,69 +100,5 @@ function App() {
   )
 
 }
-
-
-
-// class App extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       token: '',
-//       user: null,
-//       errorMessage: '',
-//       apiData: null
-//     }
-//     this.checkForLocalToken = this.checkForLocalToken.bind(this);
-//     this.liftToken = this.liftToken.bind(this);
-//     this.logout = this.logout.bind(this);
-//   }
-
-
-//   liftToken({token, user}) {
-//     this.setState({
-//       token,
-//       user
-//     })
-//   }
-
-//   logout() {
-//     // Remove token from localStorage
-//     localStorage.removeItem('mernToken');
-//     // Remove user and token from state
-//     this.setState({
-//       token: '',
-//       user: null
-//     })
-//   }
-
-//   componentDidMount() {
-//     this.checkForLocalToken()
-//   }
-//   render() {
-//     var user = this.state.user
-//     var contents;
-//     if (user) {
-//       contents = (
-//         <>
-//           <p>Hello, {user.name}</p>
-//           <p onClick={this.logout}>Logout</p>
-//         </>
-//       )
-//     } else {
-//       contents = (
-//         <>
-//           <p>Please signup or login</p>
-//           <Login liftToken={this.liftToken} />
-//           <Signup liftToken={this.liftToken} />
-//         </>
-//       )
-//     }
-//     return(
-//       contents
-//     );
-
-//   }
-// }
-
 
 export default App;

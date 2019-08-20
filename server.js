@@ -7,6 +7,7 @@ const RateLimit = require('express-rate-limit');
 const user = require('./models/user');
 
 
+
 const app = express();
 
 app.use(express.urlencoded({extended: false}));
@@ -58,6 +59,22 @@ app.get('/user/:id', (req, res) => {
         res.json(user)
     })
 })
+
+//! POST One User
+
+app.post('/user', (req, res) => {
+    let user = new user ({
+        name: req.body.name,
+        password: req.body.password,
+        email: req.body.email
+    });
+    user.save((err, user) => {
+        if (err) res.json(err);
+        res.json(user);
+    })
+})
+
+
 
 
 app.listen(process.env.PORT, () => {
