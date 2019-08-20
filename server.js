@@ -7,8 +7,7 @@ const RateLimit = require('express-rate-limit');
 const user = require('./models/User');
 const Comment = require('./models/Comment')
 
-
-
+// const models = require('./models')
 const app = express();
 
 app.use(express.urlencoded({extended: false}));
@@ -46,7 +45,7 @@ app.use('/api', require('./routes/api'))
 // app.use('/user', require('./routes/user'))
 
 // //! GET all comments
-app.get('/comment', (req, res) => {
+app.get('/comments', (req, res) => {
     Comment.find({}, function(err, comment) {
         if(err) res.json(err)
         res.json(comment)
@@ -54,29 +53,44 @@ app.get('/comment', (req, res) => {
 })
 
 // //! GET One comment
-app.get('/comment/:id', (req, res) => {
+app.get('/comments/:id', (req, res) => {
     Comment.findById(req.params.id, function(err, comment) {
         if(err) res.json(err)
         res.json(comment)
     })
 })
 
-// //! POST One comment
+//! POST a comment
 
-app.post('/comment', (req, res) => {
-    let comment = new Comment ({
+app.post('/comments', (req,res) => {
+    Comment.create({
         comment: req.body.comment,
-        like: req.body.like,
-    });
-    Comment.save((err, comment) => {
-        if (err) res.json(err);
-        res.json(comment);
+        like: req.body.like
+    }, function(err, comment) {
+        res.json(comment)
+    })
+})
+
+// //! POST One User comment
+
+app.get("/users/:id", (req, res) => {
+    User.findById(req.params.id, function(err, user) {
+        commentSchema.findById(req.body.id, function(err, comment) {
+            user.comments.push(comment);
+            user.save( function(err) {
+                comment.user.push(user);
+                comment.save( function(err) {
+                    if (err) res.json(err)
+                    res.json(user)
+                })
+            })
+        })
     })
 })
 
 //! UPDATE a comment
 
-app.put('/comment/:id', (req, res) => {
+app.put('/comments/:id', (req, res) => {
     Comment.findByIdAndUpdate(req.params.id, {
         comment: req.body.comment,
         like: req.body.like
@@ -86,7 +100,14 @@ app.put('/comment/:id', (req, res) => {
     })
 })
 
+//! DELETE a comment
 
+app.delete('/comments/:id', (req, res) => {
+    Comment.findByIdAndDelete(req.params.id, function(err, comment) {
+        if (err) res.json(err)
+        res.json(comment)
+    })
+})
 
 
 app.listen(process.env.PORT, () => {

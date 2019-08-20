@@ -6,10 +6,13 @@ function PicturesList({pictures, handlePicturesChange}) {
     // todo: only render if token is present
     if (pictures.length) {
         content = pictures.map((picture, id) => {
-            return  <img alt='roverPicture' 
-                className='rover-pictures' 
-                src={picture.img_src} onClick={() => handlePicturesChange(picture.img_src)} 
-                key={id} />
+            return  <div>
+                        <img alt='roverPicture' 
+                            className='rover-pictures' 
+                            src={picture.img_src} 
+                            onClick={() => handlePicturesChange(picture.img_src)} 
+                            key={id} />
+                    </div>
         })
         // content = <p>pictures are here</p>
 
