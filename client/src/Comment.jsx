@@ -4,24 +4,18 @@ import './App.css';
 
 function Comment({comments}) {
 
-    const [newComment, setNewComment] = useState('enter comment here');
+    const [newComment, setNewComment] = useState('');
 
     useEffect(() => {
-        // setNewComment(e.target)
         axios.post('/comments', {
             comment: newComment,
             like: false
         })
-    })
+    },[newComment])
     
     const handleCommentSubmit = (e) => {
         e.preventDefault();
-        // console.log('form submitted')
-        axios.post('/comments', {
-            comment: newComment,
-            like: false
-        })
-        // axios.post('/comments', ())
+        setNewComment(e.target.comment.value)
     }
 
 
