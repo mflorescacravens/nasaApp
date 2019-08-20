@@ -9,7 +9,7 @@ function App() {
 
   const [user, setUser] = useState(null);
   const [token, setToken] = useState('');
-  const [rover, setRover] = useState();
+  const [rover, setRover] = useState('curiosity');
   const [pictures, setPictures] = useState({});
   const [comment, setComment] = useState();
   const [errorMessage, setErrorMessage] = useState('')
@@ -42,29 +42,24 @@ function App() {
 
   const logout = () => {
     localStorage.removeItem('mernToken');
-    setToken('')
-    setUser(null)
+    setToken('');
+    setUser(null);
   }
   
   const liftToken = ({token, user}) => {
-    console.log('setting user: ', user);
-    console.log('setting token: ', token)
     setToken(token)
     setUser(user)
   }
   
+  const handleRoverChange = (e) => {
+    setRover(e.target.name)
+  }
 
   useEffect(() => {
-    console.log('rover effect running')
-    // todo: have this on click change photos to specific rover
-    // setRover()
-  })
-
-  useEffect(() => {
-    axios.get(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=1&api_key=lwwON4lcFqWw0zXubbcETbUPjgEtP3st0LT6d2no`).then((response) => {
+    axios.get(`https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=1000&page=1&api_key=lwwON4lcFqWw0zXubbcETbUPjgEtP3st0LT6d2no`).then((response) => {
       setPictures(response.data.photos);
     }) 
-  }, [])
+  }, [rover])
 
   var content;
   if (user) {
@@ -84,18 +79,17 @@ function App() {
       </div>
     )
   }
-  console.log('test one two', pictures, pictures.length)
 
   return (
     <div className="App">
       <h1>Rover Mars</h1>
       {content}
       <img className="roverImg" src="https://spaceplace.nasa.gov/mars-curiosity/en/sojourner.png" alt=""/>
-      <a>Hi! I'm Curiosity</a>
+      <a onClick={handleRoverChange} name='curiosity'>Hi! I'm Curiosity</a>
       <img className="roverImg" src="https://spaceplace.nasa.gov/mars-curiosity/en/sojourner.png" alt=""/>
-      <a>Hi! I'm Opportunity</a>
+      <a onClick={handleRoverChange} name='opportunity'>Hi! I'm Opportunity</a>
       <img className="roverImg" src="https://spaceplace.nasa.gov/mars-curiosity/en/sojourner.png" alt=""/>
-      <a>Hi! I'm Spirit</a>
+      <a onClick={handleRoverChange} name='spirit'>Hi! I'm Spirit</a>
       <PicturesList pictures={pictures} handlePicturesChange={setPictures}/>
     </div>
   )

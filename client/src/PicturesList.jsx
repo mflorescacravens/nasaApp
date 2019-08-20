@@ -4,7 +4,6 @@ import './App.css';
 function PicturesList({pictures, handlePicturesChange}) {
     let content;
     // todo: only render if token is present
-    console.log(pictures.length)
     if (pictures.length) {
         content = pictures.map((picture, id) => {
             return  <img alt='roverPicture' 
@@ -16,7 +15,7 @@ function PicturesList({pictures, handlePicturesChange}) {
 
     } else {
     // there is no data, show a placeholder
-        content = <p>No rover pictures!</p>
+        content = <p>Click a rover to see pictures!</p>
     }
     return (
         <div>

@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const expressJWT = require('express-jwt');
 const helmet = require('helmet');
 const RateLimit = require('express-rate-limit');
-const user = require('./models/user');
+const user = require('./models/User');
+const Comment = require('./models/Comment')
 
 
 
@@ -44,33 +45,44 @@ app.use('/auth', require('./routes/auth'));
 app.use('/api', require('./routes/api'))
 // app.use('/user', require('./routes/user'))
 
-//! GET all users
-app.get('/user', (req, res) => {
-    user.find({}, function(err, user) {
+// //! GET all comments
+app.get('/comment', (req, res) => {
+    Comment.find({}, function(err, comment) {
         if(err) res.json(err)
-        res.json(user)
+        res.json(comment)
     })
 })
 
-//! GET One user
-app.get('/user/:id', (req, res) => {
-    user.findById(req.params.id, function(err, user) {
+// //! GET One comment
+app.get('/comment/:id', (req, res) => {
+    Comment.findById(req.params.id, function(err, comment) {
         if(err) res.json(err)
-        res.json(user)
+        res.json(comment)
     })
 })
 
-//! POST One User
+// //! POST One comment
 
-app.post('/user', (req, res) => {
-    let user = new user ({
-        name: req.body.name,
-        password: req.body.password,
-        email: req.body.email
+app.post('/comment', (req, res) => {
+    let comment = new Comment ({
+        comment: req.body.comment,
+        like: req.body.like,
     });
-    user.save((err, user) => {
+    Comment.save((err, comment) => {
         if (err) res.json(err);
-        res.json(user);
+        res.json(comment);
+    })
+})
+
+//! UPDATE a comment
+
+app.put('/comment/:id', (req, res) => {
+    Comment.findByIdAndUpdate(req.params.id, {
+        comment: req.body.comment,
+        like: req.body.like
+    }, function(err, comment) {
+        if (err) res.json(err)
+        res.json(comment)
     })
 })
 

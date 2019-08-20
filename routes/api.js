@@ -11,4 +11,8 @@ router.get('/', (req,res) => {
     res.json({type: 'success', message: 'You accessed the protected api routes'})
 })
 
+//! POST a comment
+
+
+
 module.exports = router;

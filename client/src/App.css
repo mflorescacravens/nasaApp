@@ -1,7 +1,10 @@
+body {
+  background: url('https://images8.alphacoders.com/374/374852.jpg') no-repeat center center fixed;
+}
+
 .App {
   text-align: center;
   /* background-image: url('https://images8.alphacoders.com/374/374852.jpg'); */
-  background: url('https://images8.alphacoders.com/374/374852.jpg') no-repeat center center fixed;
   /* background-position: center; */
   /* background-attachment: fixed; */
   /* background- */
