@@ -24,10 +24,6 @@ function Comment() {
 
     const handleDeleteComment = (id) => (e) => {
         e.preventDefault();
-<<<<<<< HEAD
-        console.log(comments)
-=======
->>>>>>> master
         axios.delete(`/comments/${comments[id]._id}`, () => {});
     }
 
@@ -58,14 +54,8 @@ function Comment() {
     return(
         <div>
             <h3>enter a comment below</h3>
-<<<<<<< HEAD
             <form onSubmit={handleCommentSubmit} action="POST">
                 <textarea name="comment" onChange={e => setNewComment(e.target.value)} cols="80" rows="5">{newComment}</textarea>
-=======
-            <Edit comment={comments} onSubmit={handleCommentSubmit}/>
-            {/* <form onSubmit={handleCommentSubmit} action="POST">
-                <textarea name="comment" onSubmit={setNewComment} cols="80" rows="5"></textarea>
->>>>>>> master
                 <br/>
                 <button>Submit</button>
             </form> */}
