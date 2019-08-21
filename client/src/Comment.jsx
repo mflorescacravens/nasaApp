@@ -7,13 +7,6 @@ function Comment() {
     const [newComment, setNewComment] = useState('');
 
     useEffect(() => {
-        axios.post('/comments', {
-            comment: newComment,
-            like: false
-        })
-    },[newComment])
-
-    useEffect(() => {
         axios.get('/comments').then((response) => {
           setComments(response.data)
         })
@@ -22,12 +15,16 @@ function Comment() {
     const handleCommentSubmit = (e) => {
         e.preventDefault();
         setNewComment(e.target.comment.value)
+        axios.post('/comments', {
+            comment: newComment,
+            like: false
+        }).then( () => setNewComment(""))
     }
 
     const handleDeleteComment = (id) => (e) => {
         e.preventDefault();
-        console.log(id)
-        axios.delete(`/comments/${id}`, () => {});
+        console.log(comments)
+        axios.delete(`/comments/${comments[id]._id}`, () => {});
     }
 
     const handleEditComment = (id) => (e) => {
@@ -58,7 +55,7 @@ function Comment() {
         <div>
             <h3>enter a comment below</h3>
             <form onSubmit={handleCommentSubmit} action="POST">
-                <textarea name="comment" onSubmit={setNewComment} cols="80" rows="5"></textarea>
+                <textarea name="comment" onChange={e => setNewComment(e.target.value)} cols="80" rows="5">{newComment}</textarea>
                 <br/>
                 <button>Submit</button>
             </form>
