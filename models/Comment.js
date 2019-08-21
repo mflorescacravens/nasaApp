@@ -5,6 +5,12 @@ const commentSchema = new mongoose.Schema({
     like: Boolean
 })
 
+// commentSchema.pre('save', function(next) {
+//     if (comment === true) {
+//         next()
+//     }
+// })
+
 const Comment = mongoose.model('Comment', commentSchema);
 
 module.exports = Comment;

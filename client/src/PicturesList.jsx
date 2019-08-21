@@ -3,6 +3,7 @@ import './App.css';
 import axios from 'axios';
 
 function PicturesList({rover, handleRoverChange}) {
+    
     const [pictures, setPictures] = useState([]);
 
     useEffect(() => {

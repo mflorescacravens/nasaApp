@@ -26,6 +26,7 @@ function Comment() {
 
     const handleDeleteComment = (id) => (e) => {
         e.preventDefault();
+        console.log(id)
         axios.delete(`/comments/${id}`, () => {});
     }
 

@@ -10,6 +10,11 @@ function App() {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState('');
   const [errorMessage, setErrorMessage] = useState('')
+  const [rover, setRover] = useState('curiosity');
+
+  const handleRoverChange = (e) => {
+    setRover(e.target.name)
+  };
 
   const logout = () => {
     localStorage.removeItem('mernToken');
@@ -54,11 +59,11 @@ function App() {
 
   if (!user) {
     return (
-      <Layout>
+      <div>
         <h3>Please login or signup</h3>
         <Login />
         <Signup />
-      </Layout>
+      </div>
     );
   }
 
@@ -66,16 +71,13 @@ function App() {
     <Layout>
       <h2>Hello, {user.name}</h2>
       <button onClick={logout}>Logout</button>
+      <Comment/>
+      <PicturesList rover={rover} handleRoverChange={handleRoverChange}/>
     </Layout>
   )
 }
 
-function Layout({children}) {
-  const [rover, setRover] = useState('curiosity');
-
-  const handleRoverChange = (e) => {
-    setRover(e.target.name)
-  };
+function Layout({children, rover, handleRoverChange}) {
 
   return (
     <div className="App">
@@ -104,8 +106,6 @@ function Layout({children}) {
             alt=""/>
       <a onClick={handleRoverChange} 
           name='spirit'>Hi! I'm Spirit</a>
-      <Comment/>
-      <PicturesList rover={rover} handleRoverChange={handleRoverChange}/>
     </div>
   );
 }
