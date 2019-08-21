@@ -58,7 +58,7 @@ function Comment() {
                 <textarea name="comment" onChange={e => setNewComment(e.target.value)} cols="80" rows="5">{newComment}</textarea>
                 <br/>
                 <button>Submit</button>
-            </form> */}
+            </form> 
             {content}
         </div>
     )
