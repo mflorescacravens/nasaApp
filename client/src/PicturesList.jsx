@@ -10,7 +10,7 @@ function PicturesList({rover, handleRoverChange}) {
         axios.get(`https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=1000&page=1&api_key=lwwON4lcFqWw0zXubbcETbUPjgEtP3st0LT6d2no`).then((response) => {
             setPictures(response.data.photos);
         }) 
-    }, [pictures])
+    }, [pictures, handleRoverChange])
 
     let content;
     if (pictures.length) {

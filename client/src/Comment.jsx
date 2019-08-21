@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import './App.css';
+import Edit from './Edit'
 
 function Comment() {
     const [comments, setComments] = useState();
@@ -10,9 +11,9 @@ function Comment() {
         axios.get('/comments').then((response) => {
           setComments(response.data)
         })
-    }, [newComment, comments])
+    }, [comments])
     
-    const handleCommentSubmit = (e) => {
+    const handleCommentSubmit = (comment) => (e) => {
         e.preventDefault();
         setNewComment(e.target.comment.value)
         axios.post('/comments', {
@@ -23,26 +24,29 @@ function Comment() {
 
     const handleDeleteComment = (id) => (e) => {
         e.preventDefault();
+<<<<<<< HEAD
         console.log(comments)
+=======
+>>>>>>> master
         axios.delete(`/comments/${comments[id]._id}`, () => {});
     }
 
     const handleEditComment = (id) => (e) => {
         e.preventDefault();
-        axios.put(`/comments/${id}`, () => {})
+        axios.put(`/comments/${comments[id]._id}`, () => {});
     }
 
     let content;
-    // todo: only render if token is present
     if (comments) {
         content = comments.map((comments, id) => {
-            return  <div>
-                        <p alt='roverComments' 
+            
+            return  <form onSubmit={handleDeleteComment(id)}>
+                        <p alt='roverComments'
                             className='rover-comments' 
                             key={id}>{comments.comment}</p>
-                        <button action="PUT">edit</button>
-                        <button action="DELETE" onClick={handleDeleteComment(id)}>delete</button>
-                    </div>
+                        <Edit comment={comments.comment} edit={handleEditComment} ></Edit>
+                        <button action="DELETE">delete</button>
+                    </form>
         })
         // content = <p>pictures are here</p>
 
@@ -54,11 +58,17 @@ function Comment() {
     return(
         <div>
             <h3>enter a comment below</h3>
+<<<<<<< HEAD
             <form onSubmit={handleCommentSubmit} action="POST">
                 <textarea name="comment" onChange={e => setNewComment(e.target.value)} cols="80" rows="5">{newComment}</textarea>
+=======
+            <Edit comment={comments} onSubmit={handleCommentSubmit}/>
+            {/* <form onSubmit={handleCommentSubmit} action="POST">
+                <textarea name="comment" onSubmit={setNewComment} cols="80" rows="5"></textarea>
+>>>>>>> master
                 <br/>
                 <button>Submit</button>
-            </form>
+            </form> */}
             {content}
         </div>
     )

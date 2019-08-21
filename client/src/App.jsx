@@ -6,6 +6,10 @@ import PicturesList from './PicturesList';
 import Login from './Login';
 import Signup from './Signup';
 
+// todo: get comments to be editable
+// todo: get pictures to change status on rover change
+// todo: get comments to be associated with rover
+
 function App() {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState('');
@@ -60,7 +64,7 @@ function App() {
   if (!user) {
     return (
       <div>
-        <h3>Please login or signup</h3>
+        <h1 className="App">Please login or signup</h1>
         <Login />
         <Signup />
       </div>
@@ -72,19 +76,6 @@ function App() {
       <h2>Hello, {user.name}</h2>
       <button onClick={logout}>Logout</button>
       <Comment/>
-      <PicturesList rover={rover} handleRoverChange={handleRoverChange}/>
-    </Layout>
-  )
-}
-
-function Layout({children, rover, handleRoverChange}) {
-
-  return (
-    <div className="App">
-      <h1>Rover Mars</h1>
-      <h3>click a rover to view pictures</h3>
-      <h4>You're looking at the rover: <span className='roverFeed'>{rover}</span></h4>
-      {children}
       <img className="roverImg" 
             onClick={handleRoverChange} 
             name='curiosity' 
@@ -106,6 +97,19 @@ function Layout({children, rover, handleRoverChange}) {
             alt=""/>
       <a onClick={handleRoverChange} 
           name='spirit'>Hi! I'm Spirit</a>
+      <PicturesList rover={rover} handleRoverChange={handleRoverChange}/>
+    </Layout>
+  )
+}
+
+function Layout({children, rover, handleRoverChange}) {
+
+  return (
+    <div className="App">
+      <h1>Rover Mars</h1>
+      <h3>click a rover to view pictures</h3>
+      <h4>You're looking at the rover: <span className='roverFeed'>{rover}</span></h4>
+      {children}
     </div>
   );
 }
