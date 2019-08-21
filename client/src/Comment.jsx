@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import './App.css';
+import Edit from './Edit'
 
 function Comment() {
     const [comments, setComments] = useState();
@@ -19,7 +20,7 @@ function Comment() {
         })
     }, [comments])
     
-    const handleCommentSubmit = (e) => {
+    const handleCommentSubmit = (comment) => (e) => {
         e.preventDefault();
         setNewComment(e.target.comment.value)
     }
@@ -31,20 +32,20 @@ function Comment() {
 
     const handleEditComment = (id) => (e) => {
         e.preventDefault();
-        axios.put(`/comments/${comments[id]._id}`, () => {})
+        axios.put(`/comments/${comments[id]._id}`, () => {});
     }
 
     let content;
-    // todo: only render if token is present
     if (comments) {
         content = comments.map((comments, id) => {
-            return  <div onClick={handleDeleteComment(id)}>
-                        <p alt='roverComments' 
+            
+            return  <form onSubmit={handleDeleteComment(id)}>
+                        <p alt='roverComments'
                             className='rover-comments' 
                             key={id}>{comments.comment}</p>
-                        <button action="PUT">edit</button>
+                        <Edit comment={comments.comment} edit={handleEditComment} ></Edit>
                         <button action="DELETE">delete</button>
-                    </div>
+                    </form>
         })
         // content = <p>pictures are here</p>
 
@@ -56,11 +57,12 @@ function Comment() {
     return(
         <div>
             <h3>enter a comment below</h3>
-            <form onSubmit={handleCommentSubmit} action="POST">
+            <Edit comment={comments} onSubmit={handleCommentSubmit}/>
+            {/* <form onSubmit={handleCommentSubmit} action="POST">
                 <textarea name="comment" onSubmit={setNewComment} cols="80" rows="5"></textarea>
                 <br/>
                 <button>Submit</button>
-            </form>
+            </form> */}
             {content}
         </div>
     )
