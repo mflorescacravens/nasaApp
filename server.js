@@ -109,6 +109,10 @@ app.delete('/comments/:id', (req, res) => {
     })
 })
 
+app.get('*', function(req, res) {
+    res.sendFile(__dirname + '/client/build/index.html');
+})
+
 
 app.listen(process.env.PORT, () => {
     console.log(`🍕🍕🍕you're listening to port ${process.env.PORT}...`)
