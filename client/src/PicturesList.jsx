@@ -1,16 +1,24 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import './App.css';
+import axios from 'axios';
 
-function PicturesList({pictures, handlePicturesChange}) {
+function PicturesList({rover, handleRoverChange}) {
+    const [pictures, setPictures] = useState([]);
+
+    useEffect(() => {
+        axios.get(`https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=1000&page=1&api_key=lwwON4lcFqWw0zXubbcETbUPjgEtP3st0LT6d2no`).then((response) => {
+            setPictures(response.data.photos);
+        }) 
+    }, [pictures])
+
     let content;
-    // todo: only render if token is present
     if (pictures.length) {
         content = pictures.map((picture, id) => {
             return  <div>
                         <img alt='roverPicture' 
                             className='rover-pictures' 
                             src={picture.img_src} 
-                            onClick={() => handlePicturesChange(picture.img_src)} 
+                            onClick={() => handleRoverChange(picture.img_src)} 
                             key={id} />
                     </div>
         })

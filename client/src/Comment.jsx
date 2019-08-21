@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import './App.css';
 
-function Comment({comments}) {
-
+function Comment() {
+    const [comments, setComments] = useState();
     const [newComment, setNewComment] = useState('');
 
     useEffect(() => {
@@ -12,12 +12,27 @@ function Comment({comments}) {
             like: false
         })
     },[newComment])
+
+    useEffect(() => {
+        axios.get('/comments').then((response) => {
+          setComments(response.data)
+        })
+    }, [newComment, comments])
     
     const handleCommentSubmit = (e) => {
         e.preventDefault();
         setNewComment(e.target.comment.value)
     }
 
+    const handleDeleteComment = (id) => (e) => {
+        e.preventDefault();
+        axios.delete(`/comments/${id}`, () => {});
+    }
+
+    const handleEditComment = (id) => (e) => {
+        e.preventDefault();
+        axios.put(`/comments/${id}`, () => {})
+    }
 
     let content;
     // todo: only render if token is present
@@ -28,7 +43,7 @@ function Comment({comments}) {
                             className='rover-comments' 
                             key={id}>{comments.comment}</p>
                         <button action="PUT">edit</button>
-                        <button action="DELETE">delete</button>
+                        <button action="DELETE" onClick={handleDeleteComment(id)}>delete</button>
                     </div>
         })
         // content = <p>pictures are here</p>
