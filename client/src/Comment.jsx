@@ -17,7 +17,7 @@ function Comment() {
         axios.get('/comments').then((response) => {
           setComments(response.data)
         })
-    }, [newComment, comments])
+    }, [comments])
     
     const handleCommentSubmit = (e) => {
         e.preventDefault();
@@ -26,25 +26,24 @@ function Comment() {
 
     const handleDeleteComment = (id) => (e) => {
         e.preventDefault();
-        console.log(id)
-        axios.delete(`/comments/${id}`, () => {});
+        axios.delete(`/comments/${comments[id]._id}`, () => {});
     }
 
     const handleEditComment = (id) => (e) => {
         e.preventDefault();
-        axios.put(`/comments/${id}`, () => {})
+        axios.put(`/comments/${comments[id]._id}`, () => {})
     }
 
     let content;
     // todo: only render if token is present
     if (comments) {
         content = comments.map((comments, id) => {
-            return  <div>
+            return  <div onClick={handleDeleteComment(id)}>
                         <p alt='roverComments' 
                             className='rover-comments' 
                             key={id}>{comments.comment}</p>
                         <button action="PUT">edit</button>
-                        <button action="DELETE" onClick={handleDeleteComment(id)}>delete</button>
+                        <button action="DELETE">delete</button>
                     </div>
         })
         // content = <p>pictures are here</p>

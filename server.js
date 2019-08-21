@@ -73,7 +73,7 @@ app.post('/comments', (req,res) => {
 
 // //! POST One User comment
 
-app.get("/users/:id", (req, res) => {
+app.get("/comments/:id", (req, res) => {
     User.findById(req.params.id, function(err, user) {
         commentSchema.findById(req.body.id, function(err, comment) {
             user.comments.push(comment);
